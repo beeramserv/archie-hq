@@ -40,6 +40,8 @@ jobs:
         run: |
           branch="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
           branch="${branch//[^a-zA-Z0-9_.-]/-}"
+          # keep the tag valid when the ref name reduces to a single separator
+          branch="${branch:-unknown}"
           echo "tag=${REGISTRY}/${IMAGE_NAME}:${branch}-${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
 
       - name: Build and publish Docker image
